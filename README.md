@@ -18,3 +18,14 @@ sleep for 30 seconds to allow update to take effect
 `aws lambda update-alias --function-name lambda_inference --name latest --function-version $FUNCTION_VERSION`
 
 7. with any code change, rebuild the docker image and push it to ECR (repeat 3 and 4 and 6)
+
+
+
+Notes:
+
+If you want to add dependencies 
+`uv add scikit-learn`
+
+If you want to test your function before docker
+`uv sync`
+`python run test.py`
