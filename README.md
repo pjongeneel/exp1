@@ -8,8 +8,8 @@
 5. create a lambda function in AWS (one time only)
 6. update the lambda function with the new image
 `aws lambda update-function-code --function-name lambda_inference --image-uri {AWS_ACCOUNT_NUMBER}.dkr.ecr.{AWS_REGION}.amazonaws.com/lambda_inference:latest`
-# sleep for 30 seconds to allow update to take effect
+- sleep for 30 seconds to allow update to take effect
 `FUNCTION_VERSION=$(aws lambda publish-version --function-name lambda_inference | jq -r '.Version')`
-# sleep for 30 seconds to allow update to take effect
+- sleep for 30 seconds to allow update to take effect
 `aws lambda update-alias --function-name lambda_inference --name latest --function-version $FUNCTION_VERSION`
 6. with any code change, rebuild the docker image and push it to ECR (repeat 3 and 4 and 6)
