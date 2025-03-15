@@ -6,4 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "requests>=2.32.3",
+    "pytorch-lightning>=2.5.0",
+    "smart_open>=7.1.0",
 ]
