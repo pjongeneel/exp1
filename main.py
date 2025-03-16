@@ -1,14 +1,26 @@
 # import required libs
+import os
 import sys
 from argparse import Namespace
 
+print("HELLO")
+
+
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
 # from process_trail import process_trail_log
 import numpy as np
+print("numpy imported")
 import torch
+print("torch imported")
 from pytorch_lightning import LightningModule
+print("pytorch_lightning imported")
 from torch import nn as nn
+print("torch.nn imported")
 from torch.nn import functional as F
+print("torch.nn.functional imported")
 from torch.utils.data import DataLoader, Dataset
+print("torch.utils.data imported")
 
 
 # classifies a single datapoint
@@ -61,6 +73,7 @@ def load_model():
     model = LuNet(hparams)
 
     # Load the state dictionary using map_location to force CPU
+    print("Attempting to load model")
     model.load_state_dict(torch.load("cmodel_state_dict.pth", map_location=torch.device("cpu")))
 
     # Convert model to evaluation mode
@@ -78,11 +91,13 @@ def handler(event, context):
     print(context)
 
     # Force PyTorch to use CPU only
+    print("Setting default tensor type to FloatTensor")
     torch.set_default_tensor_type(torch.FloatTensor)
 
     print("Running on:", torch.device("cpu"))
 
     # load model
+    print("Loading model")
     model = load_model()
 
     # load model and push to device (use cpu as lambda only supports cpu)
@@ -91,9 +106,11 @@ def handler(event, context):
     print("model primed")
 
     # Process input from event
+    print("Processing input")
     processed_data = process_trail_log(event)
 
     # send processed input to be classified
+    print("Running inference")
     result = run_inference(processed_data, model, device)
 
     result = 0
@@ -514,5 +531,6 @@ def process_trail_log(trail_request):
         dtype=np.float32,
     )
     print("size of test data: ", str(len(result)))
+    print("Patrick was here")
     # result = np.array(trail_request['testdatapoint'], dtype=np.float32)
     return result
